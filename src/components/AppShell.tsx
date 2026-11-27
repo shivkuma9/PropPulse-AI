@@ -28,6 +28,7 @@ import {
   PanelLeftOpen,
 } from "lucide-react";
 import { useApp } from "@/context/AppContext";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 
 interface NavGroup {
   label: string;
@@ -83,10 +84,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const unreadCount = state.alerts.filter((a) => !a.read).length;
 
   const SidebarContent = ({ isMobile = false }: { isMobile?: boolean }) => (
-    <div className="flex h-full w-64 flex-col bg-white text-slate-700 select-none">
+    <div className="theme-sidebar flex h-full w-64 flex-col text-slate-700 select-none">
       <div className="flex items-center justify-between border-b border-slate-200/80 px-4 py-3.5">
         <Link href="/" className="group flex items-center gap-3 min-w-0">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-600 shadow-xs transition-transform duration-200 group-hover:scale-105">
+          <div className="theme-btn flex h-9 w-9 shrink-0 items-center justify-center rounded-xl shadow-xs transition-transform duration-200 group-hover:scale-105">
             <svg viewBox="0 0 64 64" fill="none" className="h-5 w-5">
               <path
                 d="M16 46V24L28 16V46"
@@ -160,14 +161,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                     onClick={() => setMobileOpen(false)}
                     className={`flex items-center justify-between rounded-lg px-3 py-2 text-[13px] font-medium transition-all duration-150 ${
                       active
-                        ? "bg-blue-50 text-blue-700 font-semibold ring-1 ring-blue-200/80"
-                        : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                        ? "theme-accent-soft font-semibold"
+                        : "text-slate-600 hover:bg-slate-100/70 hover:text-slate-900"
                     }`}
                   >
                     <span className="flex items-center gap-2.5 min-w-0">
                       <Icon
                         className={`h-4 w-4 shrink-0 ${
-                          active ? "text-blue-600" : "text-slate-400"
+                          active ? "theme-accent-text" : "text-slate-400"
                         }`}
                       />
                       <span className="truncate whitespace-nowrap">
@@ -204,10 +205,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   );
 
   return (
-    <div className="flex min-h-screen bg-slate-50 text-slate-900">
+    <div className="flex min-h-screen">
       {/* Desktop Sidebar (Slides completely open/closed for full-width view) */}
       <aside
-        className={`hidden shrink-0 overflow-hidden border-slate-200 bg-white transition-all duration-200 ease-out lg:block ${
+        className={`theme-sidebar hidden shrink-0 overflow-hidden transition-all duration-200 ease-out lg:block ${
           sidebarOpen ? "w-64 border-r" : "w-0 border-r-0"
         }`}
       >
@@ -263,6 +264,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </div>
 
           <div className="flex shrink-0 items-center gap-2.5">
+            <ThemeSwitcher />
             <Link
               href="/search"
               className="hidden items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-600 transition hover:bg-slate-100 sm:flex whitespace-nowrap"

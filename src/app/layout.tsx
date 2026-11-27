@@ -1,11 +1,35 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
+import {
+  Plus_Jakarta_Sans,
+  Outfit,
+  DM_Sans,
+  Inter,
+  JetBrains_Mono,
+} from "next/font/google";
 import "./globals.css";
 import { AppProvider } from "@/context/AppContext";
 import { AppShell } from "@/components/AppShell";
 
 const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const outfit = Outfit({
+  variable: "--font-outfit",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const dmSans = DM_Sans({
+  variable: "--font-dmsans",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
@@ -30,7 +54,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${jakarta.variable} ${jetbrains.variable} h-full antialiased`}
+      data-theme="royal"
+      data-font="jakarta"
+      data-motion="smooth"
+      className={`${jakarta.variable} ${outfit.variable} ${dmSans.variable} ${inter.variable} ${jetbrains.variable} h-full antialiased`}
     >
       <body className="min-h-full">
         <AppProvider>
