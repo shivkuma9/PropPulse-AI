@@ -7,9 +7,9 @@ import { useAuth } from "@/context/AuthContext";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { user, ready, login, loginDemo } = useAuth();
-  const [email, setEmail] = useState("admin@proppulse.ai");
-  const [password, setPassword] = useState("password123");
+  const { user, ready, login } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPw, setShowPw] = useState(false);
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -74,7 +74,7 @@ export default function LoginPage() {
           Sign in to your workspace
         </h2>
         <p className="mt-0.5 text-xs text-slate-500">
-          Enter your team credentials or use quick demo access below.
+          Enter your account credentials to continue.
         </p>
 
         {error && (
@@ -96,7 +96,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full rounded-lg border border-slate-200 py-2.5 pl-9 pr-3 text-xs focus:border-emerald-500 focus:outline-none"
-                placeholder="admin@proppulse.ai"
+                placeholder="name@company.com"
               />
             </div>
           </div>
@@ -135,27 +135,6 @@ export default function LoginPage() {
             <ArrowRight className="h-4 w-4" />
           </button>
         </form>
-
-        <div className="mt-6 border-t border-slate-100 pt-4">
-          <div className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
-            Quick Demo Access (1-Click)
-          </div>
-          <div className="mt-2.5 grid grid-cols-3 gap-2 text-[11px]">
-            {(["Admin", "Sales Manager", "Sales Executive"] as const).map((role) => (
-              <button
-                key={role}
-                type="button"
-                onClick={() => {
-                  loginDemo(role);
-                  router.replace("/");
-                }}
-                className="rounded-lg border border-slate-200 bg-slate-50 px-2 py-2 font-medium text-slate-700 transition hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-800"
-              >
-                {role}
-              </button>
-            ))}
-          </div>
-        </div>
       </div>
     </div>
   );
