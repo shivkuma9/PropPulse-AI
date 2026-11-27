@@ -2,7 +2,15 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { INITIAL_APP_STATE } from "@/data/seed";
-import { getSupabaseClient, isSupabaseConfigured } from "@/lib/supabase";
+import {
+  loadCloudState,
+  sbDelete,
+  sbUpsert,
+  toLeadRow,
+  toOppRow,
+  toProjectRow,
+  toPropertyRow,
+} from "@/lib/supabaseSync";
 import {
   AlertItem,
   AppState,
@@ -69,35 +77,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
             setState(parsed);
           }
         }
-        const sb = getSupabaseClient();
-        if (sb && isSupabaseConfigured) {
-          const { data: leadsData } = await sb.from("leads").select("*").limit(200);
-          if (leadsData && leadsData.length > 0 && active) {
-            setState((prev) => ({
-              ...prev,
-              leads: leadsData.map((r) => ({
-                id: r.id,
-                date: r.date,
-                assignTo: r.assign_to || "",
-                name: r.name,
-                mobile: r.mobile,
-                email: r.email || "",
-                businessType: r.business_type,
-                category: r.category || r.business_type,
-                subcategory: r.subcategory || "",
-                residentialStructure: r.residential_structure || "",
-                budgetRange: r.budget_range || "",
-                projectRequirement: r.project_requirement || "",
-                source: r.source || "",
-                status: r.status,
-                priority: r.priority,
-                nextFollowUp: r.next_follow_up || "",
-                visitDone: Boolean(r.visit_done),
-                dealDone: Boolean(r.deal_done),
-                specialNotes: r.special_notes || "",
-              })),
-            }));
-          }
+        const cloudPatch = await loadCloudState();
+        if (cloudPatch && active && Object.keys(cloudPatch).length > 0) {
+          setState((prev) => ({ ...prev, ...cloudPatch }));
         }
       } catch {
         // Fallback to initial seed
@@ -127,30 +109,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       ...prev,
       leads: [newLead, ...prev.leads],
     }));
-    const sb = getSupabaseClient();
-    if (sb) {
-      void sb.from("leads").upsert({
-        id: newLead.id,
-        date: newLead.date,
-        assign_to: newLead.assignTo,
-        name: newLead.name,
-        mobile: newLead.mobile,
-        email: newLead.email,
-        business_type: newLead.businessType,
-        category: newLead.category,
-        subcategory: newLead.subcategory,
-        residential_structure: newLead.residentialStructure,
-        budget_range: newLead.budgetRange,
-        project_requirement: newLead.projectRequirement,
-        source: newLead.source,
-        status: newLead.status,
-        priority: newLead.priority,
-        next_follow_up: newLead.nextFollowUp,
-        visit_done: newLead.visitDone,
-        deal_done: newLead.dealDone,
-        special_notes: newLead.specialNotes,
-      });
-    }
+    sbUpsert("leads", toLeadRow(newLead));
   };
 
   const updateLead = (lead: Lead) => {
@@ -158,6 +117,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       ...prev,
       leads: prev.leads.map((l) => (l.id === lead.id ? lead : l)),
     }));
+    sbUpsert("leads", toLeadRow(lead));
   };
 
   const deleteLead = (id: string) => {
@@ -165,6 +125,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       ...prev,
       leads: prev.leads.filter((l) => l.id !== id),
     }));
+    sbDelete("leads", id);
   };
 
   const convertLeadToOpportunity = (leadId: string) => {
@@ -198,22 +159,26 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       timestamp: new Date().toLocaleString(),
       read: false,
     };
+    const updatedLead: Lead = { ...lead, status: "Converted" };
     setState((prev) => ({
       ...prev,
-      leads: prev.leads.map((l) =>
-        l.id === leadId ? { ...l, status: "Converted" } : l
-      ),
+      leads: prev.leads.map((l) => (l.id === leadId ? updatedLead : l)),
       opportunities: [newOpp, ...prev.opportunities],
       alerts: [newAlert, ...prev.alerts],
     }));
+    sbUpsert("leads", toLeadRow(updatedLead));
+    sbUpsert("opportunities", toOppRow(newOpp));
+    sbUpsert("alerts", { ...newAlert });
   };
 
   const addOpportunity = (opp: Omit<Opportunity, "id">) => {
     const id = `OPP-${2000 + state.opportunities.length + Math.floor(Math.random() * 90 + 10)}`;
+    const newOpp: Opportunity = { ...opp, id };
     setState((prev) => ({
       ...prev,
-      opportunities: [{ ...opp, id }, ...prev.opportunities],
+      opportunities: [newOpp, ...prev.opportunities],
     }));
+    sbUpsert("opportunities", toOppRow(newOpp));
   };
 
   const updateOpportunity = (opp: Opportunity) => {
@@ -221,6 +186,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       ...prev,
       opportunities: prev.opportunities.map((o) => (o.id === opp.id ? opp : o)),
     }));
+    sbUpsert("opportunities", toOppRow(opp));
   };
 
   const deleteOpportunity = (id: string) => {
@@ -228,15 +194,18 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       ...prev,
       opportunities: prev.opportunities.filter((o) => o.id !== id),
     }));
+    sbDelete("opportunities", id);
   };
 
   const addProject = (project: Omit<Project, "id" | "createdAt">) => {
     const id = `PRJ-${3000 + state.projects.length + Math.floor(Math.random() * 90 + 10)}`;
     const createdAt = new Date().toISOString().slice(0, 10);
+    const newProject: Project = { ...project, id, createdAt };
     setState((prev) => ({
       ...prev,
-      projects: [{ ...project, id, createdAt }, ...prev.projects],
+      projects: [newProject, ...prev.projects],
     }));
+    sbUpsert("projects", toProjectRow(newProject));
   };
 
   const updateProject = (project: Project) => {
@@ -244,6 +213,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       ...prev,
       projects: prev.projects.map((p) => (p.id === project.id ? project : p)),
     }));
+    sbUpsert("projects", toProjectRow(project));
   };
 
   const deleteProject = (id: string) => {
@@ -251,15 +221,18 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       ...prev,
       projects: prev.projects.filter((p) => p.id !== id),
     }));
+    sbDelete("projects", id);
   };
 
   const addProperty = (property: Omit<Property, "id" | "createdAt">) => {
     const id = `PROP-${4000 + state.properties.length + Math.floor(Math.random() * 90 + 10)}`;
     const createdAt = new Date().toISOString().slice(0, 10);
+    const newProperty: Property = { ...property, id, createdAt };
     setState((prev) => ({
       ...prev,
-      properties: [{ ...property, id, createdAt }, ...prev.properties],
+      properties: [newProperty, ...prev.properties],
     }));
+    sbUpsert("properties", toPropertyRow(newProperty));
   };
 
   const updateProperty = (property: Property) => {
@@ -267,6 +240,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       ...prev,
       properties: prev.properties.map((p) => (p.id === property.id ? property : p)),
     }));
+    sbUpsert("properties", toPropertyRow(property));
   };
 
   const deleteProperty = (id: string) => {
@@ -274,30 +248,56 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       ...prev,
       properties: prev.properties.filter((p) => p.id !== id),
     }));
+    sbDelete("properties", id);
   };
 
   const addCustomer = (customer: Omit<Customer, "id">) => {
     const id = `CUST-${500 + state.customers.length + 1}`;
+    const newCust: Customer = { ...customer, id };
     setState((prev) => ({
       ...prev,
-      customers: [{ ...customer, id }, ...prev.customers],
+      customers: [newCust, ...prev.customers],
     }));
+    sbUpsert("customers", {
+      id: newCust.id,
+      name: newCust.name,
+      mobile: newCust.mobile,
+      email: newCust.email,
+      customer_type: newCust.customerType,
+      profession: newCust.profession,
+      city: newCust.city,
+      total_deals: newCust.totalDeals,
+    });
   };
 
   const addDeal = (deal: Omit<Deal, "id">) => {
     const id = `DEAL-${600 + state.deals.length + 1}`;
+    const newDeal: Deal = { ...deal, id };
     setState((prev) => ({
       ...prev,
-      deals: [{ ...deal, id }, ...prev.deals],
+      deals: [newDeal, ...prev.deals],
     }));
+    sbUpsert("deals", {
+      id: newDeal.id,
+      customer_name: newDeal.customerName,
+      property_title: newDeal.propertyTitle,
+      transaction_type: newDeal.transactionType,
+      deal_value: newDeal.dealValue,
+      commission_amount: newDeal.commissionAmount,
+      executive: newDeal.executive,
+      closed_date: newDeal.closedDate,
+      status: newDeal.status,
+    });
   };
 
   const addEmployee = (emp: Omit<Employee, "id">) => {
     const id = `EMP-${String(state.employees.length + 1).padStart(2, "0")}`;
+    const newEmp: Employee = { ...emp, id };
     setState((prev) => ({
       ...prev,
-      employees: [...prev.employees, { ...emp, id }],
+      employees: [...prev.employees, newEmp],
     }));
+    sbUpsert("employees", { ...newEmp });
   };
 
   const updateEmployee = (emp: Employee) => {
@@ -305,6 +305,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       ...prev,
       employees: prev.employees.map((e) => (e.id === emp.id ? emp : e)),
     }));
+    sbUpsert("employees", { ...emp });
   };
 
   const addMasterValue = (key: keyof MasterCatalog, value: string) => {
@@ -369,10 +370,20 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const addWatchlist = (item: Omit<WatchlistItem, "id" | "createdAt">) => {
     const id = `WL-${Date.now()}`;
     const createdAt = new Date().toISOString().slice(0, 10);
+    const newItem: WatchlistItem = { ...item, id, createdAt };
     setState((prev) => ({
       ...prev,
-      watchlists: [{ ...item, id, createdAt }, ...prev.watchlists],
+      watchlists: [newItem, ...prev.watchlists],
     }));
+    sbUpsert("watchlists", {
+      id: newItem.id,
+      name: newItem.name,
+      type: newItem.type,
+      target: newItem.target,
+      city: newItem.city,
+      alerts_enabled: newItem.alertsEnabled,
+      created_at: newItem.createdAt,
+    });
   };
 
   const removeWatchlist = (id: string) => {
@@ -380,13 +391,18 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       ...prev,
       watchlists: prev.watchlists.filter((w) => w.id !== id),
     }));
+    sbDelete("watchlists", id);
   };
 
   const markAlertRead = (id: string) => {
+    const target = state.alerts.find((a) => a.id === id);
     setState((prev) => ({
       ...prev,
       alerts: prev.alerts.map((a) => (a.id === id ? { ...a, read: true } : a)),
     }));
+    if (target) {
+      sbUpsert("alerts", { ...target, read: true });
+    }
   };
 
   const markAllAlertsRead = () => {
@@ -394,14 +410,32 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       ...prev,
       alerts: prev.alerts.map((a) => ({ ...a, read: true })),
     }));
+    state.alerts.forEach((a) => {
+      if (!a.read) sbUpsert("alerts", { ...a, read: true });
+    });
   };
 
   const addSignal = (sig: Omit<ExpansionSignal, "id">) => {
     const id = `SIG-${Date.now()}`;
+    const newSig: ExpansionSignal = { ...sig, id };
     setState((prev) => ({
       ...prev,
-      signals: [{ ...sig, id }, ...prev.signals],
+      signals: [newSig, ...prev.signals],
     }));
+    sbUpsert("expansion_signals", {
+      id: newSig.id,
+      company_id: newSig.companyId,
+      company_name: newSig.companyName,
+      sector: newSig.sector,
+      signal_type: newSig.signalType,
+      confidence: newSig.confidence,
+      neighborhood: newSig.neighborhood,
+      city: newSig.city,
+      title: newSig.title,
+      summary: newSig.summary,
+      source_name: newSig.sourceName,
+      detected_at: newSig.detectedAt,
+    });
   };
 
   const resetDemoData = () => {
