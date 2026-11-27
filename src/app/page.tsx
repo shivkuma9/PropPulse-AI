@@ -126,11 +126,11 @@ export default function DashboardPage() {
               <Users className="h-4 w-4" />
             </span>
           </div>
-          <div className="mt-2 flex items-baseline justify-between">
-            <span className="tabular-nums text-2xl font-bold text-slate-900">
+          <div className="mt-2 flex items-baseline justify-between gap-2">
+            <span className="tabular-nums text-2xl font-bold text-slate-900 whitespace-nowrap">
               {filteredLeads.length}
             </span>
-            <span className="text-xs font-semibold text-teal-700 group-hover:underline">
+            <span className="text-xs font-semibold text-teal-700 group-hover:underline whitespace-nowrap">
               View Leads →
             </span>
           </div>
@@ -151,11 +151,11 @@ export default function DashboardPage() {
               <TrendingUp className="h-4 w-4" />
             </span>
           </div>
-          <div className="mt-2 flex items-baseline justify-between">
-            <span className="tabular-nums text-2xl font-bold text-slate-900">
+          <div className="mt-2 flex items-baseline justify-between gap-2">
+            <span className="tabular-nums text-2xl font-bold text-slate-900 whitespace-nowrap">
               {formatINR(pipelineValue)}
             </span>
-            <span className="text-xs font-semibold text-emerald-700 group-hover:underline">
+            <span className="text-xs font-semibold text-emerald-700 group-hover:underline whitespace-nowrap">
               {openOpps.length} open →
             </span>
           </div>
@@ -176,11 +176,11 @@ export default function DashboardPage() {
               <Building2 className="h-4 w-4" />
             </span>
           </div>
-          <div className="mt-2 flex items-baseline justify-between">
-            <span className="tabular-nums text-2xl font-bold text-slate-900">
+          <div className="mt-2 flex items-baseline justify-between gap-2">
+            <span className="tabular-nums text-2xl font-bold text-slate-900 whitespace-nowrap">
               {state.projects.length} / {state.properties.length}
             </span>
-            <span className="text-xs font-semibold text-amber-700 group-hover:underline">
+            <span className="text-xs font-semibold text-amber-700 group-hover:underline whitespace-nowrap">
               Inventory →
             </span>
           </div>
@@ -201,11 +201,11 @@ export default function DashboardPage() {
               <Radar className="h-4 w-4" />
             </span>
           </div>
-          <div className="mt-2 flex items-baseline justify-between">
-            <span className="tabular-nums text-2xl font-bold text-slate-900">
+          <div className="mt-2 flex items-baseline justify-between gap-2">
+            <span className="tabular-nums text-2xl font-bold text-slate-900 whitespace-nowrap">
               {state.signals.length}
             </span>
-            <span className="text-xs font-semibold text-rose-700 group-hover:underline">
+            <span className="text-xs font-semibold text-rose-700 group-hover:underline whitespace-nowrap">
               {state.companies.length} brands →
             </span>
           </div>

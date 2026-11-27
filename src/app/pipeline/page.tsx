@@ -130,7 +130,7 @@ export default function PipelinePage() {
       <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xs">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="border-b border-slate-200 bg-slate-50 text-[11px] font-semibold uppercase tracking-wider text-slate-500">
+            <thead className="border-b border-slate-200 bg-slate-50 text-[11px] font-semibold uppercase tracking-wider text-slate-500 whitespace-nowrap">
               <tr>
                 <th className="px-4 py-3">Opp / Lead ID</th>
                 <th className="px-4 py-3">Prospect</th>
