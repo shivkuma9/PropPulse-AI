@@ -134,7 +134,7 @@ export default function SettingsPage() {
                       onClick={() => setSelectedMaster(item.key)}
                       className={`flex w-full items-center justify-between rounded-lg px-3 py-1.5 text-left text-xs font-medium ${
                         selectedMaster === item.key
-                          ? "bg-indigo-600 text-white"
+                          ? "bg-blue-600 text-white"
                           : "text-slate-700 hover:bg-slate-100"
                       }`}
                     >
@@ -158,11 +158,11 @@ export default function SettingsPage() {
                 value={newVal}
                 onChange={(e) => setNewVal(e.target.value)}
                 placeholder="Add new master value..."
-                className="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-xs focus:border-indigo-500 focus:outline-none"
+                className="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-xs focus:border-blue-500 focus:outline-none"
               />
               <button
                 type="submit"
-                className="inline-flex items-center gap-1 rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-white hover:bg-indigo-700"
+                className="inline-flex items-center gap-1 rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-700"
               >
                 <Plus className="h-3.5 w-3.5" /> Add
               </button>
@@ -267,7 +267,7 @@ export default function SettingsPage() {
               </select>
               <button
                 type="submit"
-                className="w-full rounded-lg bg-indigo-600 py-2 font-semibold text-white hover:bg-indigo-700"
+                className="w-full rounded-lg bg-blue-600 py-2 font-semibold text-white hover:bg-blue-700"
               >
                 Add Employee
               </button>
@@ -308,7 +308,7 @@ export default function SettingsPage() {
                   className="flex items-center justify-between rounded-lg border border-slate-100 bg-slate-50 p-3"
                 >
                   <div className="flex items-center gap-2 font-medium text-slate-800">
-                    <Database className="h-4 w-4 text-indigo-600" />
+                    <Database className="h-4 w-4 text-blue-600" />
                     {src.name}
                   </div>
                   <span className="text-[11px] font-semibold text-emerald-700">

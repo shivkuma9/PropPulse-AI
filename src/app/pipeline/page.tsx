@@ -81,7 +81,7 @@ export default function PipelinePage() {
         </div>
         <button
           onClick={openCreate}
-          className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-white hover:bg-indigo-700"
+          className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-700"
         >
           <Plus className="h-4 w-4" />
           New Opportunity
@@ -99,7 +99,7 @@ export default function PipelinePage() {
               onClick={() => setStageFilter(stageFilter === stage ? "All" : stage)}
               className={`rounded-xl border p-3 text-left transition ${
                 stageFilter === stage
-                  ? "border-indigo-500 bg-indigo-50"
+                  ? "border-blue-500 bg-blue-50"
                   : "border-slate-200 bg-white hover:border-slate-300"
               }`}
             >
@@ -169,7 +169,7 @@ export default function PipelinePage() {
                           ? "bg-emerald-100 text-emerald-700"
                           : opp.status === "Lost"
                           ? "bg-rose-100 text-rose-700"
-                          : "bg-indigo-100 text-indigo-700"
+                          : "bg-blue-100 text-blue-700"
                       }`}
                     >
                       {opp.status}
@@ -357,7 +357,7 @@ export default function PipelinePage() {
               </button>
               <button
                 type="submit"
-                className="rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-white hover:bg-indigo-700"
+                className="rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-700"
               >
                 Save Opportunity
               </button>

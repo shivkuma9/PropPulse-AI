@@ -62,7 +62,7 @@ export default function WatchlistsPage() {
         />
         <button
           type="submit"
-          className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-indigo-600 px-4 py-2 font-semibold text-white hover:bg-indigo-700"
+          className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700"
         >
           <Plus className="h-3.5 w-3.5" /> Add Watchlist
         </button>

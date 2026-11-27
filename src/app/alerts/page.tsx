@@ -31,7 +31,7 @@ export default function AlertsPage() {
             className={`flex flex-col justify-between gap-3 rounded-xl border p-4 shadow-xs sm:flex-row sm:items-center ${
               alt.read
                 ? "border-slate-200 bg-white"
-                : "border-indigo-200 bg-indigo-50/40"
+                : "border-blue-200 bg-blue-50/40"
             }`}
           >
             <div className="flex items-start gap-3">
@@ -39,7 +39,7 @@ export default function AlertsPage() {
                 className={`mt-0.5 h-4 w-4 shrink-0 ${
                   alt.severity === "Critical Opportunity"
                     ? "text-rose-600"
-                    : "text-indigo-600"
+                    : "text-blue-600"
                 }`}
               />
               <div>
@@ -56,7 +56,7 @@ export default function AlertsPage() {
             {!alt.read && (
               <button
                 onClick={() => markAlertRead(alt.id)}
-                className="shrink-0 rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-indigo-700"
+                className="shrink-0 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-700"
               >
                 Mark Read
               </button>

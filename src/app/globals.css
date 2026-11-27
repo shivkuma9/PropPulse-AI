@@ -7,7 +7,7 @@
 }
 
 body {
-  background-color: #f6f7f5;
+  background-color: #f8fafc;
   color: #0f172a;
   font-family: var(--font-sans);
   letter-spacing: 0.005em;
@@ -18,10 +18,10 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-/* Sleek dark sidebar scrollbar — prevents bright white OS scrollbar */
+/* Clean minimal light scrollbar */
 .sidebar-scroll {
   scrollbar-width: thin;
-  scrollbar-color: rgba(148, 163, 184, 0.25) transparent;
+  scrollbar-color: rgba(148, 163, 184, 0.35) transparent;
 }
 
 .sidebar-scroll::-webkit-scrollbar {
@@ -33,12 +33,12 @@ body {
 }
 
 .sidebar-scroll::-webkit-scrollbar-thumb {
-  background-color: rgba(148, 163, 184, 0.22);
+  background-color: rgba(148, 163, 184, 0.35);
   border-radius: 9999px;
 }
 
 .sidebar-scroll::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(148, 163, 184, 0.4);
+  background-color: rgba(100, 116, 139, 0.55);
 }
 
 @keyframes fadeSlideUp {
@@ -53,7 +53,7 @@ body {
 }
 
 .animate-enter {
-  animation: fadeSlideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: fadeSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .card-interactive {
@@ -62,5 +62,5 @@ body {
 
 .card-interactive:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px -8px rgba(15, 23, 42, 0.08);
+  box-shadow: 0 8px 24px -8px rgba(37, 99, 235, 0.1);
 }

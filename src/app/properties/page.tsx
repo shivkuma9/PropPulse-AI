@@ -111,7 +111,7 @@ export default function PropertiesPage() {
         </div>
         <button
           onClick={openCreate}
-          className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-white hover:bg-indigo-700"
+          className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-700"
         >
           <Plus className="h-4 w-4" />
           Add Property
@@ -126,7 +126,7 @@ export default function PropertiesPage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search unit, project, area, owner..."
-            className="w-full rounded-lg border border-slate-200 py-2 pl-8 pr-3 text-xs focus:border-indigo-500 focus:outline-none"
+            className="w-full rounded-lg border border-slate-200 py-2 pl-8 pr-3 text-xs focus:border-blue-500 focus:outline-none"
           />
         </div>
         <select
@@ -191,7 +191,7 @@ export default function PropertiesPage() {
                     <div className="text-slate-800">{prop.area}</div>
                     <Link
                       href="/map"
-                      className="inline-flex items-center gap-1 text-[11px] font-medium text-indigo-600 hover:underline"
+                      className="inline-flex items-center gap-1 text-[11px] font-medium text-blue-600 hover:underline"
                     >
                       <MapPin className="h-3 w-3" /> View on Map
                     </Link>
@@ -411,7 +411,7 @@ export default function PropertiesPage() {
               </button>
               <button
                 type="submit"
-                className="rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-white hover:bg-indigo-700"
+                className="rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-700"
               >
                 Save Property
               </button>

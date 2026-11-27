@@ -58,7 +58,7 @@ export default function OpportunitiesFinderPage() {
                 </div>
                 <div className="mt-1 h-1.5 rounded-full bg-slate-100">
                   <div
-                    className="h-full rounded-full bg-indigo-600"
+                    className="h-full rounded-full bg-blue-600"
                     style={{ width: `${nb.residentialDensity}%` }}
                   />
                 </div>
