@@ -12,8 +12,11 @@ import {
   Activity,
   ArrowUpRight,
   RotateCcw,
+  Plus,
+  MapPin,
 } from "lucide-react";
 import { useApp } from "@/context/AppContext";
+import { useAuth } from "@/context/AuthContext";
 import { formatINR } from "@/lib/format";
 import { BusinessType } from "@/types";
 
@@ -26,6 +29,7 @@ const BUSINESS_TYPES: BusinessType[] = [
 
 export default function DashboardPage() {
   const { state } = useApp();
+  const { user } = useAuth();
   const [selectedEmployee, setSelectedEmployee] = useState("All");
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
@@ -65,11 +69,37 @@ export default function DashboardPage() {
       <div className="flex flex-col gap-4 rounded-xl border border-slate-200 bg-white p-5 shadow-xs lg:flex-row lg:items-center lg:justify-between">
         <div>
           <h1 className="text-xl font-bold tracking-tight text-slate-900">
-            Welcome back, Admin
+            Welcome back, {user?.name || "Admin"}
           </h1>
           <p className="mt-0.5 text-sm text-slate-500">
             PropPulse AI — Real Estate CRM &amp; Market Intelligence Overview
           </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Link
+              href="/leads"
+              className="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-emerald-700"
+            >
+              <Plus className="h-3.5 w-3.5" /> Add Lead
+            </Link>
+            <Link
+              href="/projects"
+              className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-100"
+            >
+              <Plus className="h-3.5 w-3.5" /> Add Project
+            </Link>
+            <Link
+              href="/properties"
+              className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-100"
+            >
+              <Plus className="h-3.5 w-3.5" /> Add Property
+            </Link>
+            <Link
+              href="/map"
+              className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-100"
+            >
+              <MapPin className="h-3.5 w-3.5 text-emerald-600" /> Market Map
+            </Link>
+          </div>
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5">

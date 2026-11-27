@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
   Users,
@@ -26,8 +26,11 @@ import {
   RotateCcw,
   PanelLeftClose,
   PanelLeftOpen,
+  LogOut,
+  ChevronDown,
 } from "lucide-react";
 import { useApp } from "@/context/AppContext";
+import { useAuth } from "@/context/AuthContext";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 
 interface NavGroup {
@@ -77,9 +80,39 @@ const NAV_GROUPS: NavGroup[] = [
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
   const { state, resetDemoData } = useApp();
+  const { user, ready, logout } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [profileOpen, setProfileOpen] = useState(false);
+
+  const isLoginPage = pathname === "/login";
+
+  useEffect(() => {
+    if (ready && !user && !isLoginPage) {
+      router.replace("/login");
+    }
+  }, [ready, user, isLoginPage, router]);
+
+  if (isLoginPage) {
+    return <>{children}</>;
+  }
+
+  if (!ready || !user) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#f3f7f5] text-xs font-medium text-slate-500">
+        Loading workspace...
+      </div>
+    );
+  }
+
+  const initials = user.name
+    .split(" ")
+    .map((p) => p[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
 
   const unreadCount = state.alerts.filter((a) => !a.read).length;
 
@@ -284,11 +317,54 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 </span>
               )}
             </Link>
-            <div className="flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 py-1 pl-1.5 pr-3 whitespace-nowrap">
-              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-600 text-[11px] font-bold text-white">
-                AD
-              </div>
-              <span className="text-xs font-medium text-slate-700">Admin</span>
+            <div className="relative">
+              <button
+                onClick={() => setProfileOpen((p) => !p)}
+                className="flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 py-1 pl-1.5 pr-2.5 transition hover:bg-slate-100 whitespace-nowrap"
+              >
+                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-600 text-[11px] font-bold text-white">
+                  {initials}
+                </div>
+                <span className="text-xs font-medium text-slate-700">{user.name}</span>
+                <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
+              </button>
+
+              {profileOpen && (
+                <>
+                  <div
+                    className="fixed inset-0 z-40"
+                    onClick={() => setProfileOpen(false)}
+                  />
+                  <div className="absolute right-0 z-50 mt-2 w-56 rounded-xl border border-slate-200 bg-white p-2 text-xs shadow-xl">
+                    <div className="border-b border-slate-100 px-3 py-2">
+                      <div className="font-bold text-slate-900">{user.name}</div>
+                      <div className="text-[11px] text-slate-500">{user.email}</div>
+                      <span className="mt-1 inline-block rounded bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">
+                        {user.role}
+                      </span>
+                    </div>
+                    <Link
+                      href="/settings"
+                      onClick={() => setProfileOpen(false)}
+                      className="mt-1 flex items-center gap-2 rounded-lg px-3 py-2 font-medium text-slate-700 hover:bg-slate-100"
+                    >
+                      <Settings className="h-3.5 w-3.5 text-slate-400" />
+                      Settings &amp; Masters
+                    </Link>
+                    <button
+                      onClick={async () => {
+                        setProfileOpen(false);
+                        await logout();
+                        router.replace("/login");
+                      }}
+                      className="flex w-full items-center gap-2 rounded-lg px-3 py-2 font-medium text-rose-600 hover:bg-rose-50"
+                    >
+                      <LogOut className="h-3.5 w-3.5" />
+                      Sign Out
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </header>

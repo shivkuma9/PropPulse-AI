@@ -8,6 +8,7 @@ import {
 } from "next/font/google";
 import "./globals.css";
 import { AppProvider } from "@/context/AppContext";
+import { AuthProvider } from "@/context/AuthContext";
 import { AppShell } from "@/components/AppShell";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -60,9 +61,11 @@ export default function RootLayout({
       className={`${jakarta.variable} ${outfit.variable} ${dmSans.variable} ${inter.variable} ${jetbrains.variable} h-full antialiased`}
     >
       <body className="min-h-full">
-        <AppProvider>
-          <AppShell>{children}</AppShell>
-        </AppProvider>
+        <AuthProvider>
+          <AppProvider>
+            <AppShell>{children}</AppShell>
+          </AppProvider>
+        </AuthProvider>
       </body>
     </html>
   );
