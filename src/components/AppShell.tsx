@@ -81,16 +81,20 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   const SidebarContent = () => (
     <div className="flex h-full flex-col bg-slate-950 text-slate-200">
-      <div className="flex items-center justify-between border-b border-slate-800 px-5 py-4">
-        <Link href="/" className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-indigo-600 font-bold text-white shadow-sm">
-            PP
+      <div className="flex items-center justify-between border-b border-slate-800/80 px-5 py-4">
+        <Link href="/" className="flex items-center gap-3 group">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-900 ring-1 ring-teal-500/40 shadow-sm transition-transform duration-200 group-hover:scale-105">
+            <svg viewBox="0 0 64 64" fill="none" className="h-6 w-6">
+              <path d="M16 46V24L28 16V46" stroke="#14B8A6" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M28 28L40 21V46" stroke="#F8FAFC" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M34 36H39L42 30L46 41L49 36H53" stroke="#2DD4BF" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </div>
           <div>
-            <div className="text-sm font-semibold tracking-tight text-white">
+            <div className="text-sm font-bold text-white">
               PropPulse AI
             </div>
-            <div className="text-[11px] text-slate-400">
+            <div className="text-[11px] font-medium text-teal-400/90">
               Real Estate CRM &amp; GIS
             </div>
           </div>
@@ -122,9 +126,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                     key={item.href}
                     href={item.href}
                     onClick={() => setMobileOpen(false)}
-                    className={`flex items-center justify-between rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                    className={`flex items-center justify-between rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150 ${
                       active
-                        ? "bg-indigo-600 text-white"
+                        ? "bg-teal-600/90 text-white shadow-xs"
                         : "text-slate-300 hover:bg-slate-800/80 hover:text-white"
                     }`}
                   >
@@ -228,7 +232,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </div>
         </header>
 
-        <main className="flex-1 p-4 sm:p-6">{children}</main>
+        <main className="animate-enter flex-1 p-4 sm:p-6">{children}</main>
       </div>
     </div>
   );

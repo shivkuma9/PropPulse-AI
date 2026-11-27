@@ -116,19 +116,21 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <Link
           href="/leads"
-          className="group rounded-xl border border-slate-200 bg-white p-5 shadow-xs transition hover:border-indigo-300"
+          className="card-interactive group rounded-xl border border-slate-200/90 bg-white p-5 shadow-xs hover:border-teal-400"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
               Active Leads
             </span>
-            <Users className="h-4 w-4 text-indigo-600" />
+            <span className="rounded-lg bg-teal-50 p-1.5 text-teal-700">
+              <Users className="h-4 w-4" />
+            </span>
           </div>
           <div className="mt-2 flex items-baseline justify-between">
-            <span className="text-2xl font-bold text-slate-900">
+            <span className="tabular-nums text-2xl font-bold text-slate-900">
               {filteredLeads.length}
             </span>
-            <span className="text-xs font-medium text-indigo-600 group-hover:underline">
+            <span className="text-xs font-semibold text-teal-700 group-hover:underline">
               View Leads →
             </span>
           </div>
@@ -139,19 +141,21 @@ export default function DashboardPage() {
 
         <Link
           href="/pipeline"
-          className="group rounded-xl border border-slate-200 bg-white p-5 shadow-xs transition hover:border-indigo-300"
+          className="card-interactive group rounded-xl border border-slate-200/90 bg-white p-5 shadow-xs hover:border-emerald-400"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
               Open Pipeline
             </span>
-            <TrendingUp className="h-4 w-4 text-emerald-600" />
+            <span className="rounded-lg bg-emerald-50 p-1.5 text-emerald-700">
+              <TrendingUp className="h-4 w-4" />
+            </span>
           </div>
           <div className="mt-2 flex items-baseline justify-between">
-            <span className="text-2xl font-bold text-slate-900">
+            <span className="tabular-nums text-2xl font-bold text-slate-900">
               {formatINR(pipelineValue)}
             </span>
-            <span className="text-xs font-medium text-emerald-600 group-hover:underline">
+            <span className="text-xs font-semibold text-emerald-700 group-hover:underline">
               {openOpps.length} open →
             </span>
           </div>
@@ -162,19 +166,21 @@ export default function DashboardPage() {
 
         <Link
           href="/properties"
-          className="group rounded-xl border border-slate-200 bg-white p-5 shadow-xs transition hover:border-indigo-300"
+          className="card-interactive group rounded-xl border border-slate-200/90 bg-white p-5 shadow-xs hover:border-amber-400"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
               Projects &amp; Inventory
             </span>
-            <Building2 className="h-4 w-4 text-amber-600" />
+            <span className="rounded-lg bg-amber-50 p-1.5 text-amber-700">
+              <Building2 className="h-4 w-4" />
+            </span>
           </div>
           <div className="mt-2 flex items-baseline justify-between">
-            <span className="text-2xl font-bold text-slate-900">
+            <span className="tabular-nums text-2xl font-bold text-slate-900">
               {state.projects.length} / {state.properties.length}
             </span>
-            <span className="text-xs font-medium text-amber-600 group-hover:underline">
+            <span className="text-xs font-semibold text-amber-700 group-hover:underline">
               Inventory →
             </span>
           </div>
@@ -185,19 +191,21 @@ export default function DashboardPage() {
 
         <Link
           href="/expansion-tracker"
-          className="group rounded-xl border border-slate-200 bg-white p-5 shadow-xs transition hover:border-indigo-300"
+          className="card-interactive group rounded-xl border border-slate-200/90 bg-white p-5 shadow-xs hover:border-rose-400"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
               Market Signals
             </span>
-            <Radar className="h-4 w-4 text-rose-600" />
+            <span className="rounded-lg bg-rose-50 p-1.5 text-rose-700">
+              <Radar className="h-4 w-4" />
+            </span>
           </div>
           <div className="mt-2 flex items-baseline justify-between">
-            <span className="text-2xl font-bold text-slate-900">
+            <span className="tabular-nums text-2xl font-bold text-slate-900">
               {state.signals.length}
             </span>
-            <span className="text-xs font-medium text-rose-600 group-hover:underline">
+            <span className="text-xs font-semibold text-rose-700 group-hover:underline">
               {state.companies.length} brands →
             </span>
           </div>
