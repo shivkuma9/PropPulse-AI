@@ -50,7 +50,7 @@ export default function NewsAndDiscoveryPage() {
               className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs"
             >
               <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-                <span className="font-semibold text-blue-600">
+                <span className="font-semibold text-emerald-600">
                   {n.source} • {n.sector}
                 </span>
                 <span

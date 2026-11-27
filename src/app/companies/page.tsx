@@ -50,7 +50,7 @@ export default function CompaniesPage() {
               onClick={() => setSector(sector === sec ? "All" : sec)}
               className={`rounded-xl border p-3.5 text-left transition ${
                 sector === sec
-                  ? "border-blue-500 bg-blue-50"
+                  ? "border-emerald-500 bg-emerald-50"
                   : "border-slate-200 bg-white hover:border-slate-300"
               }`}
             >
@@ -81,7 +81,7 @@ export default function CompaniesPage() {
                 onClick={() => setSelected(c)}
                 className={`w-full rounded-lg border p-3 text-left transition ${
                   selected?.id === c.id
-                    ? "border-blue-500 bg-blue-50"
+                    ? "border-emerald-500 bg-emerald-50"
                     : "border-slate-100 hover:bg-slate-50"
                 }`}
               >
@@ -106,7 +106,7 @@ export default function CompaniesPage() {
               <div className="flex flex-wrap items-start justify-between gap-2">
                 <div>
                   <div className="flex items-center gap-2">
-                    <Building className="h-5 w-5 text-blue-600" />
+                    <Building className="h-5 w-5 text-emerald-600" />
                     <h2 className="text-lg font-bold text-slate-900">{selected.name}</h2>
                     {selected.verified && (
                       <CheckCircle2 className="h-4 w-4 text-emerald-600" />
@@ -116,7 +116,7 @@ export default function CompaniesPage() {
                     {selected.sector} • HQ: {selected.hq} • {selected.city}
                   </p>
                 </div>
-                <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-bold text-blue-700">
+                <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700">
                   {selected.branchCount} Branches ({selected.growthRate})
                 </span>
               </div>
@@ -140,9 +140,9 @@ export default function CompaniesPage() {
                     ))}
                   </ul>
                 </div>
-                <div className="rounded-lg border border-blue-200 bg-blue-50/60 p-3.5">
-                  <div className="text-xs font-bold text-blue-800">Opportunities</div>
-                  <ul className="mt-1.5 list-disc space-y-1 pl-4 text-xs text-blue-900">
+                <div className="rounded-lg border border-emerald-200 bg-emerald-50/60 p-3.5">
+                  <div className="text-xs font-bold text-emerald-800">Opportunities</div>
+                  <ul className="mt-1.5 list-disc space-y-1 pl-4 text-xs text-emerald-900">
                     {selected.swot.opportunities.map((o, i) => (
                       <li key={i}>{o}</li>
                     ))}

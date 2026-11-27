@@ -54,8 +54,8 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      data-theme="royal"
-      data-font="jakarta"
+      data-theme="emerald"
+      data-font="outfit"
       data-motion="smooth"
       className={`${jakarta.variable} ${outfit.variable} ${dmSans.variable} ${inter.variable} ${jetbrains.variable} h-full antialiased`}
     >

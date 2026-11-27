@@ -63,7 +63,7 @@ export default function MarketMapPage() {
       {/* Layer Controls & Legend */}
       <div className="flex flex-wrap items-center gap-3 rounded-xl border border-slate-200 bg-white p-3.5 text-xs shadow-xs">
         {[
-          { key: "projects", label: `ProBro Projects (${state.projects.length})`, dot: "bg-blue-600" },
+          { key: "projects", label: `ProBro Projects (${state.projects.length})`, dot: "bg-emerald-600" },
           { key: "properties", label: `ProBro Units (${state.properties.length})`, dot: "bg-emerald-500" },
           { key: "branches", label: `Market Branches (${filteredBranches.length})`, dot: "bg-rose-500" },
           { key: "hubs", label: `Commercial Hubs (${state.commercialHubs.length})`, dot: "bg-slate-700" },

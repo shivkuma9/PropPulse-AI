@@ -26,13 +26,13 @@ const MOTIONS = [
 
 export function ThemeSwitcher() {
   const [open, setOpen] = useState(false);
-  const [theme, setTheme] = useState("royal");
-  const [font, setFont] = useState("jakarta");
+  const [theme, setTheme] = useState("emerald");
+  const [font, setFont] = useState("outfit");
   const [motion, setMotion] = useState("smooth");
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem("pp_theme") || "royal";
-    const savedFont = localStorage.getItem("pp_font") || "jakarta";
+    const savedTheme = localStorage.getItem("pp_theme") || "emerald";
+    const savedFont = localStorage.getItem("pp_font") || "outfit";
     const savedMotion = localStorage.getItem("pp_motion") || "smooth";
     setTheme(savedTheme);
     setFont(savedFont);

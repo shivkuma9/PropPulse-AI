@@ -116,7 +116,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <div className="truncate text-sm font-bold text-slate-900 whitespace-nowrap">
               PropPulse AI
             </div>
-            <div className="truncate text-[11px] font-medium text-blue-600 whitespace-nowrap">
+            <div className="truncate text-[11px] font-medium text-emerald-600 whitespace-nowrap">
               Real Estate CRM &amp; GIS
             </div>
           </div>
@@ -253,7 +253,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 </>
               ) : (
                 <>
-                  <PanelLeftOpen className="h-4 w-4 text-blue-600" />
+                  <PanelLeftOpen className="h-4 w-4 text-emerald-600" />
                   <span>Open Menu</span>
                 </>
               )}
@@ -285,7 +285,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               )}
             </Link>
             <div className="flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 py-1 pl-1.5 pr-3 whitespace-nowrap">
-              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-600 text-[11px] font-bold text-white">
+              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-600 text-[11px] font-bold text-white">
                 AD
               </div>
               <span className="text-xs font-medium text-slate-700">Admin</span>
